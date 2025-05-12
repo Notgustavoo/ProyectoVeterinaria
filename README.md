@@ -95,7 +95,7 @@ docker exec -it laravel_app php artisan migrate
 
 ## 📸 Capturas
 
-*(Aquí podés poner capturas del panel admin, listado de mascotas, etc)*
+
 
 ---
 
