@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Dashboard Admin - VetControl</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex min-h-screen bg-gray-100">
+        <!-- Menú lateral -->
+        <aside class="w-64 bg-cyan-900 text-white flex flex-col p-4">
+            <div class="flex items-center mb-8">
+                <div
+                    class="bg-white text-black rounded-full w-10 h-10 flex items-center justify-center font-bold mr-2"
+                >
+                    VC
+                </div>
+                <h2 class="text-xl font-semibold">VetControl</h2>
+            </div>
+
+            <nav class="flex-1 space-y-4">
+                <a
+                    href="#"
+                    class="flex items-center gap-2 bg-cyan-800 p-2 rounded"
+                    >Dashboard</a
+                >
+                <a
+                    href="#"
+                    class="flex items-center gap-2 hover:bg-cyan-700 p-2 rounded"
+                    >Mascotas</a
+                >
+                <a
+                    href="#"
+                    class="flex items-center gap-2 hover:bg-cyan-700 p-2 rounded"
+                    >Dueños</a
+                >
+                <a
+                    href="#"
+                    class="flex items-center gap-2 hover:bg-cyan-700 p-2 rounded"
+                    >Citas</a
+                >
+                <a
+                    href="#"
+                    class="flex items-center gap-2 hover:bg-cyan-700 p-2 rounded"
+                    >Servicios</a
+                >
+                <a
+                    href="#"
+                    class="flex items-center gap-2 hover:bg-cyan-700 p-2 rounded"
+                    >Facturas</a
+                >
+                <a
+                    href="#"
+                    class="flex items-center gap-2 hover:bg-cyan-700 p-2 rounded"
+                    >Reportes</a
+                >
+            </nav>
+
+            <button
+                id="cerrarSesion"
+                class="mt-auto flex items-center gap-2 bg-red-600 hover:bg-red-700 p-2 rounded"
+            >
+                Cerrar sesion
+            </button>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <h1 class="text-2xl font-bold mb-6">Ing. Gustavo</h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-blue-200 p-4 rounded shadow text-center">
+                    <div class="text-2xl"></div>
+                    <p class="font-semibold">Mascotas Registradas</p>
+                    <span
+                        id="totalMascotas"
+                        class="text-lg font-bold text-gray-700"
+                        >0</span
+                    >
+                </div>
+                <div class="bg-pink-100 p-4 rounded shadow text-center">
+                    <div class="text-2xl"></div>
+                    <p class="font-semibold">Dueños activos</p>
+                    <span
+                        id="totalClientes"
+                        class="text-lg font-bold text-gray-700"
+                        >0</span
+                    >
+                </div>
+                <div class="bg-yellow-100 p-4 rounded shadow text-center">
+                    <div class="text-2xl"></div>
+                    <p class="font-semibold">Citas pendientes</p>
+                    <span
+                        id="totalPendientes"
+                        class="text-lg font-bold text-gray-700"
+                        >0</span
+                    >
+                </div>
+                <div class="bg-indigo-200 p-4 rounded shadow text-center">
+                    <div class="text-2xl"></div>
+                    <p class="font-semibold">citas este mes</p>
+                    <span id="totalMes" class="text-lg font-bold text-gray-700"
+                        >0</span
+                    >
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div
+                    class="bg-gray-200 h-40 flex flex-col items-center justify-center rounded shadow text-center text-xl font-bold"
+                >
+                    <p>Servicios este mes: <span id="serviciosMes">0</span></p>
+                    <p>
+                        Ingresos del mes: <span id="ingresosMes">Bs. 0.00</span>
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div
+                        class="bg-gray-300 h-40 flex items-center justify-center rounded shadow text-center font-medium"
+                    >
+                        CALENDARIO
+                    </div>
+                    <div
+                        class="bg-white h-40 flex items-center justify-center rounded shadow text-center font-medium"
+                    >
+                        PRÓXIMA CITA
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 rounded shadow p-4">
+                <h2 class="text-lg font-bold mb-4">
+                    Últimas mascotas registradas
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-left">
+                        <thead>
+                            <tr>
+                                <th class="p-2">Nombre</th>
+                                <th class="p-2">Especie</th>
+                                <th class="p-2">Raza</th>
+                                <th class="p-2">Dueño</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaMascotas"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <script src="js/dashboard.js"></script>
+    </body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login - VetControl</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body
+        class="bg-white font-[Inter] min-h-screen flex flex-col items-center p-4"
+    >
+        <!-- mi headerrr -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center gap-2">
+                <img
+                    src="img/logo.png"
+                    alt="Logo"
+                    class="w-[4rempx] h-[4rem]"
+                />
+                <h1 class="text-4xl md:text-6xl lg:text-[80px] font-bold">
+                    <span class="text-[#00bc80]">Vet</span>Control
+                </h1>
+            </div>
+            <p class="text-black italic mt-1 mb-6 text-base">
+                Amor, salud y control para tus mascotas.
+            </p>
+        </div>
+
+        <div
+            class="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-xl shadow-[0_6px_16px_rgba(0,0,0,0.1)] overflow-hidden mb-8"
+        >
+            <div class="md:w-1/2 bg-gray-200">
+                <img
+                    src="img/perrito.jpg"
+                    alt="Mascota feliz"
+                    class="w-full h-full object-cover"
+                />
+            </div>
+
+            <!-- el formulario -->
+            <div class="md:w-1/2 p-8 flex flex-col justify-center">
+                <h2 class="text-2xl text-gray-800 mb-6">Iniciar Sesión</h2>
+                <form>
+                    <div class="mb-4">
+                        <input
+                            type="email"
+                            placeholder="Correo electrónico"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#00bc80]"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <input
+                            type="password"
+                            placeholder="Contraseña"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#00bc80]"
+                        />
+                    </div>
+                    <p class="text-sm text-center text-gray-600 mb-4">
+                        ¿No tienes una cuenta?
+                        <a
+                            href="registro.html"
+                            class="text-[#00bc80] hover:underline"
+                            >Regístrate</a
+                        >
+                    </p>
+                    <button
+                        type="submit"
+                        class="w-full bg-[#00bc80] text-white py-3 rounded-md text-base hover:bg-[#00a36c] transition"
+                    >
+                        Ingresar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <footer class="text-center text-black text-sm mt-auto">
+            &copy; 2025 Notgustavo. Todos los derechos reservados.
+        </footer>
+
+        <script>
+            document
+                .getElementById("formLogin")
+                .addEventListener("submit", async function (e) {
+                    e.preventDefault();
+
+                    const correo = document.getElementById("correo").value;
+                    const contraseña =
+                        document.getElementById("contraseña").value;
+
+                    try {
+                        const res = await fetch(
+                            "http://localhost:8000/api/login",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ correo, contraseña }),
+                            }
+                        );
+
+                        const data = await res.json();
+
+                        if (res.ok) {
+                            localStorage.setItem(
+                                "usuario",
+                                JSON.stringify(data.usuario)
+                            );
+
+                            if (data.usuario.rol === "admin") {
+                                window.location.href = "admin.html";
+                            } else if (data.usuario.rol === "cliente") {
+                                window.location.href = "cliente.html";
+                            } else if (data.usuario.rol === "veterinario") {
+                                window.location.href = "veterinario.html";
+                            } else {
+                                document.getElementById("mensaje").textContent =
+                                    "Rol desconocido";
+                            }
+                        } else {
+                            document.getElementById("mensaje").textContent =
+                                data.mensaje || "Error al iniciar sesión";
+                        }
+                    } catch (error) {
+                        document.getElementById("mensaje").textContent =
+                            "Error de conexión con el servidor";
+                    }
+                });
+        </script>
+    </body>
+</html>
