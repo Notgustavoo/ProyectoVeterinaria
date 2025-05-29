@@ -1,69 +1,73 @@
-async function cargarMetricas() {
-    console.log("📊 Ejecutando cargarMetricas");
+import { initMetricasUI } from "./modules/metricas.js";
+import { initMascotasUI } from "./modules/mascotas.js";
+import { initDuenosUI } from "./modules/duenos.js";
+import { initCitasUI } from "./modules/citas.js";
+import { initServiciosUI } from "./modules/servicios.js";
+import { initFacturasUI } from "./modules/facturas.js";
+import { mostrarSeccion, secciones } from "./modules/secciones.js";
+import { initReportesUI } from "./modules/reportes.js";
+import { initConsultasUI } from "./modules/consultas.js";
 
-    try {
-        const [mascotas, clientes, pendientes, mes, servicios, ingresos] =
-            await Promise.all([
-                fetch("http://localhost:8000/api/mascotas/total").then((res) =>
-                    res.json()
-                ),
-                fetch("http://localhost:8000/api/clientes/activos").then(
-                    (res) => res.json()
-                ),
-                fetch("http://localhost:8000/api/citas/pendientes").then(
-                    (res) => res.json()
-                ),
-                fetch("http://localhost:8000/api/citas/mes").then((res) =>
-                    res.json()
-                ),
-                fetch("http://localhost:8000/api/servicios/mes").then((res) =>
-                    res.json()
-                ),
-                fetch("http://localhost:8000/api/facturas/ingresos-mes").then(
-                    (res) => res.json()
-                ),
-            ]);
+const yaInicializado = {
+    dashboard: false,
+    mascotas: false,
+    duenos: false,
+    citas: false,
+    servicios: false,
+    facturas: false,
+    reportes: false,
+    consultas: false,
+};
 
-        document.getElementById("totalMascotas").textContent = mascotas.total;
-        document.getElementById("totalClientes").textContent = clientes.total;
-        document.getElementById("totalPendientes").textContent =
-            pendientes.total;
-        document.getElementById("totalMes").textContent = mes.total;
-        document.getElementById("serviciosMes").textContent = servicios.total;
-        const monto = Number(ingresos.ingresos ?? 0);
-        document.getElementById(
-            "ingresosMes"
-        ).textContent = `Bs. ${monto.toFixed(2)}`;
-    } catch (error) {
-        console.error("Error al cargar métricas:", error);
+const inicializadores = {
+    dashboard: initMetricasUI,
+    mascotas: initMascotasUI,
+    duenos: initDuenosUI,
+    citas: initCitasUI,
+    servicios: initServiciosUI,
+    facturas: initFacturasUI,
+    reportes: initReportesUI,
+    consultas: initConsultasUI,
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!usuario || usuario.rol !== "admin") {
+        window.location.href = "login.html";
+        return;
     }
-}
-async function cargarUltimasMascotas() {
-    try {
-        const res = await fetch("http://localhost:8000/api/mascotas/ultimas");
-        const mascotas = await res.json();
 
-        const tbody = document.getElementById("tablaMascotas");
-        tbody.innerHTML = "";
 
-        mascotas.forEach((m) => {
-            const fila = `
-                <tr>
-                    <td class="p-2">${m.nombre}</td>
-                    <td class="p-2">${m.especie}</td>
-                    <td class="p-2">${m.raza}</td>
-                    <td class="p-2">${m.usuario?.nombre ?? "Sin dueño"}</td>
-                </tr>
-            `;
-            tbody.innerHTML += fila;
+    const nombreEl = document.getElementById("nombreAdmin");
+    if (nombreEl) nombreEl.textContent = usuario.nombre;
+
+
+    mostrarSeccion("dashboard");
+    inicializadores.dashboard();
+    yaInicializado.dashboard = true;
+
+
+    const enlaces = document.querySelectorAll("aside nav a[data-seccion]");
+    enlaces.forEach((enlace) => {
+        enlace.addEventListener("click", (e) => {
+            e.preventDefault();
+            const seccion = enlace.dataset.seccion;
+            mostrarSeccion(seccion);
+
+            if (!yaInicializado[seccion]) {
+                inicializadores[seccion]?.();
+                yaInicializado[seccion] = true;
+            }
         });
-    } catch (error) {
-        console.error("Error al cargar mascotas:", error);
-    }
-}
+    });
 
-// 💡 ESTA parte faltaba 👇
-document.addEventListener("DOMContentLoaded", () => {
-    cargarMetricas();
-    cargarUltimasMascotas();
+
+    const btnCerrar = document.getElementById("cerrarSesion");
+    if (btnCerrar) {
+        btnCerrar.addEventListener("click", () => {
+            localStorage.removeItem("usuario");
+            window.location.href = "login.html";
+        });
+    }
 });

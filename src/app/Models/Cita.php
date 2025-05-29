@@ -20,19 +20,22 @@ class Cita extends Model
         'estado',
     ];
 
-    // Relación: esta cita pertenece a una mascota
+
+    public const ESTADOS_VALIDOS = ['pendiente', 'realizada', 'cancelada'];
+
+
     public function mascota()
     {
         return $this->belongsTo(Mascota::class, 'id_mascota');
     }
 
-    // Relación: esta cita puede estar asignada a un veterinario
+
     public function veterinario()
     {
         return $this->belongsTo(Usuario::class, 'id_veterinario');
     }
 
-    // Relación: esta cita puede tener una consulta asociada
+
     public function consulta()
     {
         return $this->hasOne(Consulta::class, 'id_cita');

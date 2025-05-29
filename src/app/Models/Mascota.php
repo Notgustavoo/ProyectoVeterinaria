@@ -21,25 +21,24 @@ class Mascota extends Model
         'id_dueño'
     ];
 
-    // Relación inversa: mascota pertenece a un usuario
+
     public function dueño()
     {
         return $this->belongsTo(Usuario::class, 'id_dueño');
     }
 
-    // Relación: una mascota puede tener muchas citas
+
     public function citas()
     {
         return $this->hasMany(Cita::class, 'id_mascota');
     }
 
-    // Relación: una mascota puede tener muchas vacunaciones
+
     public function vacunaciones()
     {
         return $this->hasMany(Vacunacion::class, 'id_mascota');
     }
 
-    // Relación: una mascota puede tener muchas consultas
     public function consultas()
     {
         return $this->hasMany(Consulta::class, 'id_mascota');

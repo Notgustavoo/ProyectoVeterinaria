@@ -8,8 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const correo = document.getElementById("correo").value.trim();
         const contraseña = document.getElementById("contraseña").value.trim();
 
+        // Validación frontend de contraseña
+        const tieneMayuscula = /[A-Z]/.test(contraseña);
+        const tieneNumero = /[0-9]/.test(contraseña);
+        const tieneEspecial = /[\W_]/.test(contraseña);
+        const largoMinimo = contraseña.length >= 8;
+
         if (!nombre || !correo || !contraseña) {
             alert("Por favor, completa todos los campos.");
+            return;
+        }
+
+        if (!largoMinimo || !tieneMayuscula || !tieneNumero || !tieneEspecial) {
+            alert(
+                "La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial."
+            );
             return;
         }
 

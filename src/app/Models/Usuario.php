@@ -25,13 +25,12 @@ class Usuario extends Model
         'contraseña',
     ];
 
-    // Relación: un usuario puede tener muchas mascotas
     public function mascotas()
     {
         return $this->hasMany(Mascota::class, 'id_dueño');
     }
 
-    // Relación: si es veterinario, puede tener muchas consultas
+
     public function consultas()
     {
         return $this->hasMany(Consulta::class, 'id_veterinario');
