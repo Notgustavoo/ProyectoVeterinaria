@@ -1,4 +1,4 @@
-# 🐾 Proyecto Veterinaria
+# Proyecto Veterinaria
 
 Sistema de control de mascotas para una veterinaria. Desarrollado con **Laravel, MySQL y Docker**, pensado para gestionar:
 
@@ -12,7 +12,7 @@ Sistema de control de mascotas para una veterinaria. Desarrollado con **Laravel,
 
 ---
 
-## 🚀 Stack utilizado
+## Stack utilizado
 
 - **Laravel 10+**
 - **MySQL 8**
@@ -22,7 +22,7 @@ Sistema de control de mascotas para una veterinaria. Desarrollado con **Laravel,
 
 ---
 
-## ⚙️ Instrucciones de uso
+##  Instrucciones de uso
 
 ### 1. Clonar repositorio
 
@@ -64,19 +64,19 @@ docker exec -it laravel_app php artisan migrate
 
 ---
 
-## 🌐 Accesos
+##  Accesos
 
 | Servicio     | URL                       |
 |--------------|---------------------------|
 | Laravel App  | http://localhost:8000     |
 | phpMyAdmin   | http://localhost:8081     |
 
-> Usuario MySQL: `laravel`  
-> Contraseña: `laravel123`
+> Usuario MySQL: `` 
+> Contraseña: ``
 
 ---
 
-## 🛡️ Roles del sistema
+##  Roles del sistema
 
 - `admin` → controla usuarios, reportes, servicios
 - `veterinario` → atiende mascotas, registra vacunas, genera facturas
@@ -84,7 +84,7 @@ docker exec -it laravel_app php artisan migrate
 
 ---
 
-## 📦 Extras planificados
+##  Extras planificados
 
 - Subida de fotos de mascota
 - Notificaciones por email
@@ -93,12 +93,12 @@ docker exec -it laravel_app php artisan migrate
 
 ---
 
-## 📸 Capturas
+##  Capturas
 
 
 
 ---
 
-## 🤝 Licencia
+##  Licencia
 
 Proyecto universitario desarrollado por **Gustavo Villarroel** — 2025.
